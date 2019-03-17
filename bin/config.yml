@@ -1,0 +1,89 @@
+#------------------
+#All Available Enchantments
+#PROTECTION_ENVIRONMENTAL
+#PROTECTION_FIRE
+#PROTECTION_FALL
+#PROTECTION_EXPLOSIONS
+#ROTECTION_PROJECTILE
+#OXYGEN
+#WATER_WORKER
+#DAMAGE_ALL
+#DAMAGE_UNDEAD
+#DAMAGE_ARTHROPODS
+#KNOCKBACK
+#FIRE_ASPECT
+#LOOT_BONUS_MOBS
+#DIG_SPEED
+#SILK_TOUCH
+#DURABILITY
+#LOOT_BONUS_BLOCKS
+#ARROW_DAMAGE
+#ARROW_KNOCKBACK
+#ARROW_FIRE
+#ARROW_INFINITE
+ 
+
+Messages:
+  NoPerms: "You do not have permissions to use this command!"
+  PlayersOnly: "This command can only be used by players!"
+  
+Settings:
+  InventoryName: "&4&l&nThe Great Bosses"
+  #Must be a factor of 9
+  InventorySlots: 9
+   #Kills all bosses when plugin is disabled (Server restart or reboot)
+  KillAll: true
+  
+Testing: false
+  
+Bosses: 
+  Skeletor:
+    GUI:
+      #Item used to spawn the Boss
+      Item: 'Stone' 
+      #The Slot in the GUI
+      Slot: 5 
+      #The name of the Item
+      Name: '&6&lSkeletor Boss' 
+      #The lore on the item
+      Lore: 
+        - '&3The Great Skeletor Boss'
+        - '&aCost: &6%Cost%'
+      #How much the Spawn Egg Costs
+      Cost: 20 
+      #The message when it is Bought
+      BuyingMessage: '&3Thank you for buying &6&l&nThe Skeletor Boss&3.' 
+    SpawnEgg:
+      Item: 'Stone'
+      Name: '&6&lSkeletor Boss Egg'
+      Lore:
+        - '&7Right click a block to'
+        - '&7Spawn the Boss'
+    Boss:
+      #Name of the Boss
+      Name: '&6&l&nSkeletor Boss' 
+      #The Bosses Health
+      Health: 80 
+      #Type of Boss
+      BossType: 'Skeleton' 
+      #Armor Type
+      ArmorType: 'Gold' 
+      #Enchantments on the Armor
+      ArmorEnchantments: 
+        - 'PROTECTION_ENVIRONMENTAL:10'
+      #Item that the boss Uses
+      WeaponType: 'Stick' 
+      #Enchantments on the Bosses Weapon
+      WeaponEnchantments:
+        - 'KNOCKBACK:3'
+        - 'DAMAGE_ALL:10'
+      #Drops normal thing the Mob would drop on death
+      NatualDrops: false 
+      #Drops custom items 
+      #Format: Type (What the item is) Name (Name of the item) Lore (The lore of the item commas seperate the lines) Enchant:Power
+      CustomDrops: 
+        - 'Type:Stone Name:&6Stone Lore:&7This_is_a_cool,&4Piece_of_Stone KNOCKBACK:3'
+      MessageToKiller:
+        - '&c&lYou have just killed the Boss.'
+      Commands:
+        - 'eco give %Player% 1000'

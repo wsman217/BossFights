@@ -1,0 +1,28 @@
+main: me.wsman217.BossFights.BossFights
+name: BossFights
+api-version: 1.13
+version: 1.0
+author: wsman217
+description: A plugin that allows you to fly without creative.
+commands: 
+  bossfights: 
+    description: Sends command sender help menu
+    usage: /[command]
+    aliases: [bf]
+permissions: 
+   bf.*:
+      description: "Gives access to all BossFights commands"
+      default: op
+      children:
+         bf.buy: true
+         bf.help: true
+         bf.reload: true
+         bf.killall: true
+   bf.buy:
+       description: "Opens the BossFights GUI."
+   bf.help:
+       description: "Sends player the BossFights help menu."
+   bf.reload:
+       description: "Reloads the BossFights config.yml."
+   bf.killall:
+       description: "Kills all living bosses that have been spawned by BossFights."
