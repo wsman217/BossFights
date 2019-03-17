@@ -15,7 +15,23 @@ public enum BossesList {
 	SKELETON("Skeleton", Skeleton.class),
 	ZOMBIE("Zombie", Zombie.class),
 	WITHER("Wither Boss", Wither.class),
-	WITHER_SKELLY("Wither", WitherSkeleton.class);
+	WITHER_SKELLY("Wither", WitherSkeleton.class),
+	
+	//Added
+	MAGMA_CUBE("Magma Cube", MagmaCube.class),
+	ILLUSIONER("Illusioner", Illusioner.class),
+	VINDICATOR("Vindicator", Vindicator.class),
+	SILVERFISH("Silverfish", Silverfish.class),
+	DROWNED("Drowned", Drowned.class),
+	SHULKER("Shulker", Shulker.class),
+	STRAY("Stray", Stray.class),
+	EVOKER("Evoker", Evoker.class),
+	ENDERMITE("Endermite", Endermite.class),
+	VEX("Vex", Vex.class),
+	PHANTOM("Phantom", Phantom.class),
+	GUARDIAN("Guardian", Guardian.class),
+	ELDER_GUARDIAN("Elder Guardian", ElderGuardian.class),
+	HUSK("Husk", Husk.class);
 	
 	public String type;
 	public Class<? extends LivingEntity> clazz;

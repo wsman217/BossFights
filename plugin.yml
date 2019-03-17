@@ -3,7 +3,7 @@ name: BossFights
 api-version: 1.13
 version: 1.0
 author: wsman217
-description: A plugin that allows you to fly without creative.
+description: A plugin that adds custom bosses to the game.
 commands: 
   bossfights: 
     description: Sends command sender help menu

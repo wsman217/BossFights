@@ -21,6 +21,35 @@
 #ARROW_KNOCKBACK
 #ARROW_FIRE
 #ARROW_INFINITE
+#------------------
+#Available Boss Types
+#Skeleton
+#Zombie
+#Slime
+#Witch
+#Iron Golem
+#Spider
+#EnderMan
+#Blaze
+#Silver Fish
+#Wither
+#Wither Boss
+#Ender Dragon
+#Magma Cube
+#Illusioner
+#Vindicator
+#Silverfish
+#Drowned
+#Shulker
+#Stray
+#Evoker
+#Endermite
+#Vex
+#Phantom
+#Guardian
+#Elder Guardian
+#Husk
+#------------------
  
 
 Messages:

@@ -15,8 +15,8 @@ import me.wsman217.BossFights.listeners.BuyBossListener;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
-public class BossFights extends JavaPlugin {	
-	
+public class BossFights extends JavaPlugin {
+
 	public Tools tools;
 	public BossEntities bossEntities;
 	public BuyBoss buyBoss;
@@ -28,20 +28,20 @@ public class BossFights extends JavaPlugin {
 	public void onEnable() {
 		saveDefaultConfig();
 		if (checkDependencies()) {
-		if (!setupEconomy()){
-	   		saveDefaultConfig();
-	    }
-		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "BossFights has been enabled!");
+			if (setupEconomy()) {
 
-		tools = new Tools(this);
-		bossEntities = new BossEntities(this);
-		buyBoss = new BuyBoss(this);
+				Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "BossFights has been enabled!");
 
-		getServer().getPluginManager().registerEvents(new BuyBossListener(this), this);
-		getServer().getPluginManager().registerEvents(new BossEntityListener(this), this);
-		
-		getCommand("bossfights").setExecutor(new BFCommands(this));
-		getCommand("bf").setExecutor(new BFCommands(this));
+				tools = new Tools(this);
+				bossEntities = new BossEntities(this);
+				buyBoss = new BuyBoss(this);
+
+				getServer().getPluginManager().registerEvents(new BuyBossListener(this), this);
+				getServer().getPluginManager().registerEvents(new BossEntityListener(this), this);
+
+				getCommand("bossfights").setExecutor(new BFCommands(this));
+				getCommand("bf").setExecutor(new BFCommands(this));
+			}
 		}
 	}
 
@@ -52,27 +52,22 @@ public class BossFights extends JavaPlugin {
 
 	public boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
-			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Returned false");
 			return false;
 		}
 		RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
 		if (rsp == null) {
-			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "rsp is null");
+			Bukkit.getServer().getLogger().log(Level.SEVERE,
+					"Please install a plugin with economy that is supported by Vault!");
+			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return false;
 		}
 		econ = rsp.getProvider();
 		return econ != null;
 	}
-	
+
 	public boolean checkDependencies() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			Bukkit.getServer().getLogger().log(Level.SEVERE, "Install Vault to use BossFights!");
-			Bukkit.getServer().getPluginManager().disablePlugin(this);
-			return false;
-		}
-		
-		if (getServer().getPluginManager().getPlugin("Essentials") == null) {
-			Bukkit.getServer().getLogger().log(Level.SEVERE, "Install Essentials to use BossFights!");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return false;
 		}
