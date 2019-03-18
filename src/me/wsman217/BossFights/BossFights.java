@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.wsman217.BossFights.Metrics.Metrics;
 import me.wsman217.BossFights.commands.BFCommands;
 import me.wsman217.BossFights.entities.BossEntities;
 import me.wsman217.BossFights.gui.BuyBoss;
@@ -27,6 +28,9 @@ public class BossFights extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
+		
+		Metrics metrics = new Metrics(this);
+		
 		if (checkDependencies()) {
 			if (setupEconomy()) {
 
