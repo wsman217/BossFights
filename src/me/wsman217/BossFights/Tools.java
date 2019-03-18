@@ -1,6 +1,7 @@
 package me.wsman217.BossFights;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -16,6 +18,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import me.wsman217.BossFights.enums.Enchantments;
 
 public class Tools {
 
@@ -143,67 +147,38 @@ public class Tools {
 		}
 	}
 
-	ArrayList<String> getEnchants() {
-		ArrayList<String> en = new ArrayList<String>();
-		en.add("PROTECTION_ENVIRONMENTAL");
-		en.add("PROTECTION_FIRE");
-		en.add("PROTECTION_FALL");
-		en.add("PROTECTION_EXPLOSIONS");
-		en.add("ROTECTION_PROJECTILE");
-		en.add("OXYGEN");
-		en.add("WATER_WORKER");
-		en.add("DAMAGE_ALL");
-		en.add("DAMAGE_UNDEAD");
-		en.add("DAMAGE_ARTHROPODS");
-		en.add("KNOCKBACK");
-		en.add("FIRE_ASPECT");
-		en.add("LOOT_BONUS_MOBS");
-		en.add("DIG_SPEED");
-		en.add("SILK_TOUCH");
-		en.add("DURABILITY");
-		en.add("LOOT_BONUS_BLOCKS");
-		en.add("ARROW_DAMAGE");
-		en.add("ARROW_KNOCKBACK");
-		en.add("ARROW_FIRE");
-		en.add("ARROW_INFINITE");
-		return en;
-	}
-
-	@SuppressWarnings("deprecation")
-	public ArrayList<ItemStack> getItems(String boss) {
+	public ArrayList<ItemStack> getItems(String path) {
+		path = path + "CustomDrops";
 		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-		String path = "Bosses." + boss + ".Boss.";
-		for (String l : plugin.getConfig().getStringList(path + "CustomDrops")) {
+		for (String l : plugin.getConfig().getConfigurationSection(path).getKeys(false)) {
+			HashMap<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
+			System.out.println(l);
 			ArrayList<String> lore = new ArrayList<String>();
-			ItemStack item = new ItemStack(Material.AIR);
-			String name = "";
-			for (String i : l.split(" ")) {
-				if (i.contains("Type:")) {
-					i = i.replaceAll("Type:", "");
-					item.setType(Material.matchMaterial(i));
-				}
-				if (i.contains("Name:")) {
-					i = i.replaceAll("Name:", "");
-					i = i.replaceAll("_", " ");
-					name = color(i);
-				}
-				if (i.contains("Lore:")) {
-					i = i.replaceAll("Lore:", "");
-					for (String L : i.split(",")) {
-						L = color(L);
-						L = L.replaceAll("_", " ");
-						lore.add(L);
+			ItemStack item = new ItemStack(
+					Material.matchMaterial(plugin.getConfig().getString(path + "." + l + ".Type")));
+			String name = color(plugin.getConfig().getString(path + "." + l + ".Name"));
+
+			for (String a : plugin.getConfig().getStringList(path + "." + l + ".Lore")) {
+				a = a.replaceAll("_", " ");
+				lore.add(color(a));
+				System.out.println(a);
+			}
+			for (String en : plugin.getConfig().getStringList(path + "." + l + ".Enchants")) {
+				System.out.println(en);
+				String[] breakdown = en.split(":");
+				String enchantment = breakdown[0];
+				int lvl = Integer.parseInt(breakdown[1]);
+				String key = "null";
+				for (Enchantments enc : Enchantments.values()) {
+					if (enc.name.equalsIgnoreCase(enchantment)) {
+						System.out.println(enc.name);
+						key = enc.key;
 					}
-				}
-				for (String enc : getEnchants()) {
-					if (i.contains(enc + ":")) {
-						String[] breakdown = i.split(":");
-						String enchantment = breakdown[0];
-						int lvl = Integer.parseInt(breakdown[1]);
-						item.addUnsafeEnchantment(Enchantment.getByName(enchantment), lvl);
-					}
+					if (!(key.equals("null")))
+						enchants.put(Enchantment.getByKey(NamespacedKey.minecraft(key)), lvl);
 				}
 			}
+			item.addUnsafeEnchantments(enchants);
 			ItemMeta m = item.getItemMeta();
 			m.setDisplayName(name);
 			m.setLore(lore);

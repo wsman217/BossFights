@@ -86,7 +86,7 @@ public class BossEntityListener implements Listener {
 				if (en.getCustomName() != null && en.getCustomName().equals(name)) {
 					if (plugin.getConfig().getBoolean(path + "NatualDrops") == false) {
 						e.getDrops().clear();
-						e.getDrops().addAll(tools.getItems(boss));
+						e.getDrops().addAll(tools.getItems(path));
 						List<String> msgs = plugin.getConfig().getStringList(path + "MessageToKiller");
 						for (String msg : msgs) {
 							msg = msg.replaceAll("%Player%", player.getName());

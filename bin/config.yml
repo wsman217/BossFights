@@ -1,26 +1,37 @@
 #------------------
 #All Available Enchantments
-#PROTECTION_ENVIRONMENTAL
-#PROTECTION_FIRE
-#PROTECTION_FALL
-#PROTECTION_EXPLOSIONS
-#ROTECTION_PROJECTILE
-#OXYGEN
-#WATER_WORKER
-#DAMAGE_ALL
-#DAMAGE_UNDEAD
-#DAMAGE_ARTHROPODS
-#KNOCKBACK
-#FIRE_ASPECT
-#LOOT_BONUS_MOBS
-#DIG_SPEED
-#SILK_TOUCH
-#DURABILITY
-#LOOT_BONUS_BLOCKS
-#ARROW_DAMAGE
-#ARROW_KNOCKBACK
-#ARROW_FIRE
-#ARROW_INFINITE
+#Protection
+#Fire Protection
+#Feather Falling
+#Blast Protection
+#Projectile Protection
+#Respiration
+#Aqua Infinity
+#Thorns
+#Depth Strider
+#Frost Walker
+#Curse of Binding
+#Sharpness
+#Smite
+#Bane of Arthropods
+#Knockback
+#Fire Aspect
+#Looting
+#Sweeping Edge
+#Efficiency
+#Silk Touch
+#Unbreaking
+#Fortune
+#Power
+#Punch
+#Flame
+#Lure
+#Loyalty
+#Impaling
+#Riptide
+#Channeling
+#Mending
+#Curse of Vanishing
 #------------------
 #Available Boss Types
 #Skeleton
@@ -92,26 +103,60 @@ Bosses:
       #Name of the Boss
       Name: '&6&l&nSkeletor Boss' 
       #The Bosses Health
-      Health: 80 
+      Health: 10 
       #Type of Boss
       BossType: 'Skeleton' 
       #Armor Type
-      ArmorType: 'Gold' 
-      #Enchantments on the Armor
-      ArmorEnchantments: 
-        - 'PROTECTION_ENVIRONMENTAL:10'
-      #Item that the boss Uses
-      WeaponType: 'Stick' 
-      #Enchantments on the Bosses Weapon
-      WeaponEnchantments:
-        - 'KNOCKBACK:3'
-        - 'DAMAGE_ALL:10'
+      Armor:
+         Helment: 
+            Type: 'Gold'
+            Enchants:
+               - 'Protection:5'
+         Chestplate: 
+            Type: 'Diamond'
+            Enchants:
+               - 'Protection:5'
+         Leggings: 
+            Type: 'Chain'
+            Enchants: 
+               - 'Protection:5'
+         Boots: 
+            Type: 'None'
+            Enchants:
+               - 'None'
+      #Item that is in the bosses main hand.
+      MainHand:
+         Type: "Stick"
+         Enchants:
+            - 'Knockback:10'
+            - 'Luck of the Sea:5'
+      #Item in the bosses off hand
+      OffHand:
+         Type: "Shield"
+         Enchantments:
+            - 'Unbreaking:10'
+            - 'Mending:5'
       #Drops normal thing the Mob would drop on death
       NatualDrops: false 
       #Drops custom items 
       #Format: Type (What the item is) Name (Name of the item) Lore (The lore of the item commas seperate the lines) Enchant:Power
       CustomDrops: 
-        - 'Type:Stone Name:&6Stone Lore:&7This_is_a_cool,&4Piece_of_Stone KNOCKBACK:3'
+        AwesomeStone:
+           Type: 'Stone'
+           Name: '&6Stone'
+           Lore: 
+              - '&7This is a cool'
+              - '&4Piece of Stone' 
+           Enchants:
+              - 'Knockback:3'
+        WhackStick:
+           Type: 'Blaze_Rod'
+           Name: '&6Whack-A-Mole'
+           Lore:
+              - '&7LELEL'
+           Enchants:
+              - 'Sharpness:255'
+              - 'Luck of the Sea:255'
       MessageToKiller:
         - '&c&lYou have just killed the Boss.'
       Commands:

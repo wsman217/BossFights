@@ -1,11 +1,9 @@
 package me.wsman217.BossFights.entities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 
 import me.wsman217.BossFights.BossFights;
@@ -16,11 +14,13 @@ import me.wsman217.BossFights.enums.BossesList;
 public class BossEntities {
 	BossFights plugin;
 	Tools tools;
+	AddAccessories aa;
 	public ArrayList<LivingEntity> Bosses = new ArrayList<LivingEntity>();
 
 	public BossEntities(BossFights plugin) {
 		this.plugin = plugin;
 		tools = plugin.tools;
+		aa = new AddAccessories(plugin, tools);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -39,36 +39,57 @@ public class BossEntities {
 		boss.setCustomName(name);
 		boss.setMaxHealth(plugin.getConfig().getInt(path + "Health"));
 		boss.setHealth(plugin.getConfig().getInt(path + "Health"));
-		String type = plugin.getConfig().getString(path + "ArmorType");
-		HashMap<Enchantment, Integer> ArmorEnchantments = new HashMap<Enchantment, Integer>();
-		for (String en : plugin.getConfig().getStringList(path + "ArmorEnchantments")) {
-			String[] breakdown = en.split(":");
-			String enchantment = breakdown[0];
-			int lvl = Integer.parseInt(breakdown[1]);
-			ArmorEnchantments.put(Enchantment.getByName(enchantment), lvl);
-		}
-		HashMap<Enchantment, Integer> WeaponEnchantments = new HashMap<Enchantment, Integer>();
-		for (String en : plugin.getConfig().getStringList(path + "WeaponEnchantments")) {
-			String[] breakdown = en.split(":");
-			String enchantment = breakdown[0];
-			int lvl = Integer.parseInt(breakdown[1]);
-			WeaponEnchantments.put(Enchantment.getByName(enchantment), lvl);
-		}
-		boss.getEquipment().setItemInMainHand(
-				tools.makeItem(Material.matchMaterial(plugin.getConfig().getString(path + "WeaponType")), 1, "", null,
-						WeaponEnchantments));
 
-		if (!(type.equalsIgnoreCase("none"))) {
+		String mainHandType = plugin.getConfig().getString(path + "MainHand.Type");
+		String offHandType = plugin.getConfig().getString(path + "OffHand.Type");
+
+		if (!(mainHandType.equalsIgnoreCase("none")))
+			boss.getEquipment().setItemInMainHand(
+					tools.makeItem(Material.matchMaterial(plugin.getConfig().getString(path + "MainHand.Type")), 1, "",
+							null, aa.mainHandEnchants(path)));
+		if (!(offHandType.equalsIgnoreCase("none")))
+			boss.getEquipment().setItemInOffHand(
+					tools.makeItem(Material.matchMaterial(plugin.getConfig().getString(path + "OffHand.Type")), 1, "",
+							null, aa.offHandEnchants(path)));
+
+		String helmentType = plugin.getConfig().getString(path + "Armor.Helment.Type");
+		String chestType = plugin.getConfig().getString(path + "Armor.Chestplate.Type");
+		String leggingType = plugin.getConfig().getString(path + "Armor.Leggings.Type");
+		String bootsType = plugin.getConfig().getString(path + "Armor.Boots.Type");
+		
+		if (!(helmentType.equalsIgnoreCase("none"))) {
 			for (Armor armor : Armor.values()) {
-				if (armor.type.equalsIgnoreCase(type)) {
-					armor.Helm.addUnsafeEnchantments(ArmorEnchantments);
-					armor.Chest.addUnsafeEnchantments(ArmorEnchantments);
-					armor.Pants.addUnsafeEnchantments(ArmorEnchantments);
-					armor.Boots.addUnsafeEnchantments(ArmorEnchantments);
+				if (armor.type.equalsIgnoreCase(helmentType)) {
+					armor.Helm.addUnsafeEnchantments(aa.helmEnchants(path));
 					boss.getEquipment().setHelmet(armor.Helm);
+				}
+			}
+		}
+		
+		if (!(chestType.equalsIgnoreCase("none"))) {
+			for (Armor armor : Armor.values()) {
+				if (armor.type.equalsIgnoreCase(chestType)) {
+					armor.Chest.addUnsafeEnchantments(aa.chestEnchants(path));
 					boss.getEquipment().setChestplate(armor.Chest);
-					boss.getEquipment().setLeggings(armor.Chest);
-					boss.getEquipment().setBoots(armor.Chest);
+				}
+			}
+		}
+		
+		if (!(leggingType.equalsIgnoreCase("none"))) {
+			System.out.println("Test");
+			for (Armor armor : Armor.values()) {
+				if (armor.type.equalsIgnoreCase(leggingType)) {
+					armor.Pants.addUnsafeEnchantments(aa.leggingEnchants(path));
+					boss.getEquipment().setLeggings(armor.Pants);
+				}
+			}
+		}
+		
+		if (!(bootsType.equalsIgnoreCase("none"))) {
+			for (Armor armor : Armor.values()) {
+				if (armor.type.equalsIgnoreCase(bootsType)) {
+					armor.Boots.addUnsafeEnchantments(aa.bootEnchants(path));
+					boss.getEquipment().setBoots(armor.Boots);
 				}
 			}
 		}
